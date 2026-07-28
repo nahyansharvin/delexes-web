@@ -9,6 +9,8 @@ interface ButtonProps {
   variant?: Variant
   /** Append a trailing arrow glyph. */
   arrow?: boolean
+  /** Force an <a> tag even for "/..." paths (downloads, external files). */
+  external?: boolean
   className?: string
   children: ReactNode
 }
@@ -24,6 +26,7 @@ export default function Button({
   to,
   variant = 'red',
   arrow = false,
+  external = false,
   className = '',
   children,
 }: ButtonProps) {
@@ -34,7 +37,7 @@ export default function Button({
       {arrow && <span className="text-[17px] leading-none">&rarr;</span>}
     </>
   )
-  const isInternal = to.startsWith('/')
+  const isInternal = to.startsWith('/') && !external
   return isInternal ? (
     <Link to={to} className={classes}>
       {inner}
