@@ -46,7 +46,7 @@ export const categories: Category[] = [
   {
     n: '04',
     slug: 'implants',
-    icon: '🦴',
+    icon: '🦷',
     accent: '#7C3AED',
     title: 'Implants',
     short:
