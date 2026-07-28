@@ -87,13 +87,12 @@ export default function Category() {
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-              {featured.map((p, i) => (
+              {featured.map((p) => (
                 <ProductCard
                   key={p.name}
                   name={p.name}
                   description={p.description}
                   image={p.image}
-                  to={`/products/${category.slug}/${i}`}
                 />
               ))}
             </div>

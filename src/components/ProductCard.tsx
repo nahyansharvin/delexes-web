@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 interface ProductCardProps {
   name: string
   description?: string
-  to: string
+  /** When provided, the card links here; when omitted it renders as a static card. */
+  to?: string
   image?: string | null
   /** Small uppercase badge shown above the name (e.g. "EXAMPLE"). */
   badge?: string
@@ -28,11 +29,10 @@ export default function ProductCard({
   tileLabel = 'product image',
   tileStyle = 'plain',
 }: ProductCardProps) {
-  return (
-    <Link
-      to={to}
-      className={`flex flex-col overflow-hidden rounded-xl border border-line ${tileStyle === 'striped' ? 'bg-canvas' : 'bg-white'} ${cardHover}`}
-    >
+  const base = `flex flex-col overflow-hidden rounded-xl border border-line ${tileStyle === 'striped' ? 'bg-canvas' : 'bg-white'}`
+
+  const inner = (
+    <>
       <div
         className="flex aspect-[4/3] items-center justify-center overflow-hidden border-b border-line"
         style={tileStyle === 'striped' ? { background: stripe } : { background: '#F0EEE9' }}
@@ -56,6 +56,14 @@ export default function ProductCard({
           <p className="mt-1.5 flex-1 text-xs leading-relaxed text-muted">{description}</p>
         )}
       </div>
+    </>
+  )
+
+  return to ? (
+    <Link to={to} className={`${base} ${cardHover}`}>
+      {inner}
     </Link>
+  ) : (
+    <div className={`${base} ${cardHover}`}>{inner}</div>
   )
 }
