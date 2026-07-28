@@ -18,7 +18,7 @@ export default function Header() {
       {/* utility bar */}
       <div className="bg-dark text-[12.5px] text-[#b9bbbe]">
         <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-12">
-          <span className="inline-flex items-center gap-2">
+          <span className="hidden items-center gap-2 sm:inline-flex">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-green" />
             Medical equipment supply — based in Ghana, serving healthcare across the region
           </span>
