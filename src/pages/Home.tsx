@@ -48,8 +48,6 @@ export default function Home() {
                 </Button>
               </div>
               <div className="mt-7 flex flex-wrap gap-6 text-[13px] text-muted">
-                <span>4 product categories</span>
-                <span className="text-[#d9d5cf]">|</span>
                 <span>Documentation &amp; warranty support</span>
                 <span className="text-[#d9d5cf]">|</span>
                 <span>Tender-ready supply</span>
