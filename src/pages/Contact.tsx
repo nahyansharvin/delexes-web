@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Container from '../components/Container'
 import Eyebrow from '../components/Eyebrow'
 import { contacts, contactCategoryOptions } from '../data/catalog'
+import { WHATSAPP_NUMBER, SHEETS_WEBAPP_URL } from '../config'
 
 interface FormState {
   fullName: string
@@ -22,6 +23,23 @@ const EMPTY: FormState = {
   requirements: '',
 }
 
+const buildWhatsAppUrl = (f: FormState): string | null => {
+  if (!WHATSAPP_NUMBER) return null
+  const lines = [
+    'New quote request — Delexes Medical website',
+    '',
+    `Name: ${f.fullName}`,
+    f.organisation ? `Organisation: ${f.organisation}` : null,
+    f.email ? `Email: ${f.email}` : null,
+    `Phone: ${f.phone}`,
+    f.category ? `Category: ${f.category}` : null,
+    '',
+    'Requirements:',
+    f.requirements,
+  ].filter((l): l is string => l !== null)
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`
+}
+
 const inputClass =
   'rounded-lg border-[1.5px] border-[#E2DFD9] bg-[#FAFAF8] px-3.5 py-3 text-sm text-ink transition placeholder:text-[#a8a59d] focus:border-brand-red focus:outline-none'
 const labelText = 'text-[13px] font-semibold text-[#3a3d41]'
@@ -29,19 +47,42 @@ const labelText = 'text-[13px] font-semibold text-[#3a3d41]'
 export default function Contact() {
   const [form, setForm] = useState<FormState>(EMPTY)
   const [submitted, setSubmitted] = useState(false)
+  const [waUrl, setWaUrl] = useState<string | null>(null)
 
   const update =
     (field: keyof FormState) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       setForm((prev) => ({ ...prev, [field]: e.target.value }))
       setSubmitted(false)
+      setWaUrl(null)
     }
 
+  // Submissions contain personal data (PDPL): logged to a Google Sheet
+  // (best-effort) and passed into a WhatsApp deep link. See docs/contact-form-setup.md.
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // NOTE: The form is intentionally not wired to a backend. To avoid handling
-    // personal data (PDPL), nothing is transmitted or stored — we only confirm
-    // locally. Wire this to a real endpoint once a data-handling flow is agreed.
+
+    if (SHEETS_WEBAPP_URL) {
+      fetch(SHEETS_WEBAPP_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Apps Script sends no CORS headers; opaque response is fine
+        keepalive: true, // survives same-tab navigation in the popup-blocked fallback
+        body: new URLSearchParams({ ...form }), // form-urlencoded -> no preflight; Apps Script reads e.parameter
+      }).catch(() => {})
+    } else if (import.meta.env.DEV) {
+      console.warn('[contact] VITE_GOOGLE_SHEETS_URL not set — lead logging skipped')
+    }
+
+    // Must stay synchronous: an await before window.open would leave the
+    // user-gesture call stack and get the popup blocked.
+    const url = buildWhatsAppUrl(form)
+    if (url) {
+      const win = window.open(url, '_blank', 'noopener,noreferrer')
+      if (!win) window.location.href = url // popup blocked -> same-tab navigation
+    } else if (import.meta.env.DEV) {
+      console.warn('[contact] VITE_WHATSAPP_NUMBER not set — WhatsApp redirect skipped')
+    }
+    setWaUrl(url)
     setSubmitted(true)
   }
 
@@ -64,8 +105,8 @@ export default function Contact() {
             Let&rsquo;s talk supply
           </h1>
           <p className="max-w-[620px] text-base leading-relaxed text-[#5a5d61]">
-            Send us your requirements or request a quotation — our team will get back to you. Fields
-            below are part of the design; the form is not yet connected.
+            Send us your requirements or request a quotation — submitting opens WhatsApp with your
+            message pre-filled, and our team will take it from there.
           </p>
         </Container>
       </section>
@@ -126,6 +167,7 @@ export default function Contact() {
                     placeholder="Your name"
                     value={form.fullName}
                     onChange={update('fullName')}
+                    required
                     className={inputClass}
                   />
                 </label>
@@ -156,6 +198,7 @@ export default function Contact() {
                     placeholder="+233 …"
                     value={form.phone}
                     onChange={update('phone')}
+                    required
                     className={inputClass}
                   />
                 </label>
@@ -180,6 +223,7 @@ export default function Contact() {
                   placeholder="Tell us what you need, quantities, timelines…"
                   value={form.requirements}
                   onChange={update('requirements')}
+                  required
                   className={`${inputClass} resize-y`}
                 />
               </label>
@@ -192,13 +236,28 @@ export default function Contact() {
               </button>
 
               {submitted ? (
-                <p className="mt-3.5 text-center text-[13px] font-medium text-brand-green">
-                  Thanks — this demo form isn&rsquo;t connected, so nothing was sent. We&rsquo;ll
-                  wire it to our team once ready.
-                </p>
+                waUrl ? (
+                  <p className="mt-3.5 text-center text-[13px] font-medium text-brand-green">
+                    Opening WhatsApp… If nothing opened,{' '}
+                    <a
+                      href={waUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
+                      tap here to start the chat
+                    </a>
+                    .
+                  </p>
+                ) : (
+                  <p className="mt-3.5 text-center text-[13px] font-medium text-brand-green">
+                    Thanks — your request has been recorded. We&rsquo;ll get back to you shortly.
+                  </p>
+                )
               ) : (
                 <p className="mt-3.5 text-center text-xs text-[#a8a59d]">
-                  We typically respond within 1–2 business days.
+                  We typically respond within 1–2 business days. By submitting you agree we may
+                  store these details to respond to your enquiry.
                 </p>
               )}
             </form>
