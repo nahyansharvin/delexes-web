@@ -79,7 +79,7 @@ export default function Category() {
                   Featured Products
                 </h2>
                 <p className="text-[13px] text-faint">
-                  {featured.length} items — images, specs and pricing available on request
+                  Images, specs and pricing available on request
                 </p>
               </div>
               <Link to="/contact" className="text-[13.5px] font-semibold text-brand-red">
