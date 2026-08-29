@@ -3,6 +3,7 @@ import type {
   CategoryDetail,
   ContactInfo,
   Spec,
+  SubCategory,
   ValueProp,
 } from '../types'
 
@@ -194,30 +195,80 @@ export const categoryDetails: Record<string, CategoryDetail> = {
     description:
       'A diverse portfolio of laboratory and medical consumables designed to support clinical diagnostics, research, and healthcare operations. The range includes wound care materials, histology consumables, liquid handling products, and sample preparation accessories, ensuring precision, safety, and efficiency across applications.',
     cataloguePdf: null,
-    featured: [
-      { name: 'Microscope Slides', description: 'High-quality slides with ground edges and optional frosted or color-coated finishes. Designed for accurate sample analysis in laboratory and diagnostic applications.', image: null },
-      { name: 'Cover Glasses', description: 'Precision-manufactured cover glasses available in multiple thicknesses and sizes, ensuring clarity and protection for microscopic samples.', image: null },
-      { name: 'Embedding Cassettes', description: 'Durable histology cassettes with labeled surfaces and secure lids, available in multiple designs for routine, biopsy, and processing applications.', image: null },
-      { name: 'Serological Pipettes', description: 'Sterile, individually wrapped pipettes made from polystyrene, available in multiple volume capacities for accurate liquid handling.', image: null },
-      { name: 'Pipette Pumps', description: 'Ergonomic pipette controllers designed for precise aspiration and dispensing, resistant to acids and alkalis.', image: null },
-      { name: 'Homogenizer Beads', description: 'High-performance beads made of glass, ceramic, and steel for efficient sample disruption in homogenization processes.', image: null },
-      { name: 'Gauze Swabs', description: '100% cotton swabs with high absorbency, used for wound care and medical cleaning applications.', image: null },
-      { name: 'Non-Woven Swabs', description: 'Soft and highly absorbent swabs designed to wick fluids efficiently, suitable for wound management.', image: null },
-      { name: 'Paraffin Gauze', description: 'Medicated gauze used in the treatment of burns, ulcers, and skin injuries, maintaining a moist healing environment.', image: null },
-      { name: 'O.R. Towels', description: 'Lint-free disposable towels suitable for operating room environments, available in sterile and non-sterile formats.', image: null },
-      { name: 'Trach Sponges', description: 'Specialized sponges designed for tracheostomy care with high absorbency and patient comfort.', image: null },
-      { name: 'Absorbent Cotton Products', description: 'Medical-grade cotton materials designed for cleaning, dressing, and absorbing fluids in clinical settings.', image: null },
-    ],
-    otherItems: [
-      'Tissue Cassette Storage Cabinets', 'Histology Cassette Variants (Routine, Biopsy, Processing)',
-      'Color-Frosted Microscope Slides', 'Silane-Coated Slides', 'Soda-Lime Glass Slides',
-      'Borosilicate Cover Glass', 'Pipette Stands', 'Sterile Liquid Handling Plastics',
-      'Different Volume Pipettes (1mL to 50mL)', 'Disposable Laboratory Plastics',
-      'Sample Preparation Consumables', 'Homogenizer Accessories',
-      'Grinding Beads (Glass, Ceramic, Steel)', 'Laboratory Textile Consumables',
-      'Sterile Gauze Variants', 'Non-Sterile Gauze Products', 'X-Ray Detectable Gauze',
-      'Sterilized Medical Textiles (Steam / Gamma)', 'Different Ply and Mesh Gauze Variants',
-      'Bulk Medical Consumables Packaging',
+    // General Consumables is organised into sub-categories (see below) rather
+    // than a flat product list, so there's nothing to show at this level.
+    featured: [],
+    otherItems: [],
+    subCategories: [
+      {
+        slug: 'histology-consumables',
+        title: 'Histology Consumables',
+        description:
+          'Microscope slides, cover glasses and embedding cassettes for tissue processing, sectioning and diagnostic sample analysis.',
+        image: null,
+        cataloguePdf: null,
+        featured: [
+          { name: 'Microscope Slides', description: 'High-quality slides with ground edges and optional frosted or color-coated finishes. Designed for accurate sample analysis in laboratory and diagnostic applications.', image: null },
+          { name: 'Cover Glasses', description: 'Precision-manufactured cover glasses available in multiple thicknesses and sizes, ensuring clarity and protection for microscopic samples.', image: null },
+          { name: 'Embedding Cassettes', description: 'Durable histology cassettes with labeled surfaces and secure lids, available in multiple designs for routine, biopsy, and processing applications.', image: null },
+        ],
+        otherItems: [
+          'Tissue Cassette Storage Cabinets', 'Histology Cassette Variants (Routine, Biopsy, Processing)',
+          'Color-Frosted Microscope Slides', 'Silane-Coated Slides', 'Soda-Lime Glass Slides',
+          'Borosilicate Cover Glass',
+        ],
+      },
+      {
+        slug: 'liquid-handling-products',
+        title: 'Liquid Handling Products',
+        description:
+          'Serological pipettes, pipette pumps and supporting accessories for accurate, repeatable liquid handling in the lab.',
+        image: null,
+        cataloguePdf: null,
+        featured: [
+          { name: 'Serological Pipettes', description: 'Sterile, individually wrapped pipettes made from polystyrene, available in multiple volume capacities for accurate liquid handling.', image: null },
+          { name: 'Pipette Pumps', description: 'Ergonomic pipette controllers designed for precise aspiration and dispensing, resistant to acids and alkalis.', image: null },
+        ],
+        otherItems: [
+          'Pipette Stands', 'Sterile Liquid Handling Plastics', 'Different Volume Pipettes (1mL to 50mL)',
+        ],
+      },
+      {
+        slug: 'sample-preparation-accessories',
+        title: 'Sample Preparation Accessories',
+        description:
+          'Homogenizer beads and accessories, grinding media and consumables for reliable sample disruption and preparation.',
+        image: null,
+        cataloguePdf: null,
+        featured: [
+          { name: 'Homogenizer Beads', description: 'High-performance beads made of glass, ceramic, and steel for efficient sample disruption in homogenization processes.', image: null },
+        ],
+        otherItems: [
+          'Disposable Laboratory Plastics', 'Sample Preparation Consumables', 'Homogenizer Accessories',
+          'Grinding Beads (Glass, Ceramic, Steel)',
+        ],
+      },
+      {
+        slug: 'wound-care-materials',
+        title: 'Wound Care Materials',
+        description:
+          'Gauze swabs, dressings, cotton products and medical textiles for everyday wound care and clinical use.',
+        image: null,
+        cataloguePdf: null,
+        featured: [
+          { name: 'Gauze Swabs', description: '100% cotton swabs with high absorbency, used for wound care and medical cleaning applications.', image: null },
+          { name: 'Non-Woven Swabs', description: 'Soft and highly absorbent swabs designed to wick fluids efficiently, suitable for wound management.', image: null },
+          { name: 'Paraffin Gauze', description: 'Medicated gauze used in the treatment of burns, ulcers, and skin injuries, maintaining a moist healing environment.', image: null },
+          { name: 'O.R. Towels', description: 'Lint-free disposable towels suitable for operating room environments, available in sterile and non-sterile formats.', image: null },
+          { name: 'Trach Sponges', description: 'Specialized sponges designed for tracheostomy care with high absorbency and patient comfort.', image: null },
+          { name: 'Absorbent Cotton Products', description: 'Medical-grade cotton materials designed for cleaning, dressing, and absorbing fluids in clinical settings.', image: null },
+        ],
+        otherItems: [
+          'Laboratory Textile Consumables', 'Sterile Gauze Variants', 'Non-Sterile Gauze Products',
+          'X-Ray Detectable Gauze', 'Sterilized Medical Textiles (Steam / Gamma)',
+          'Different Ply and Mesh Gauze Variants', 'Bulk Medical Consumables Packaging',
+        ],
+      },
     ],
   },
   'medical-surgery': {
@@ -266,6 +317,16 @@ export const getCategoryDetail = (slug: string | undefined): CategoryDetail => {
     otherItems: [],
   }
 }
+
+/**
+ * Returns a specific sub-category within a category detail record, or
+ * `undefined` when the category has no sub-categories or the slug doesn't
+ * match one of them — callers should treat `undefined` as "show the hub".
+ */
+export const getSubCategoryBySlug = (
+  detail: CategoryDetail,
+  subSlug: string | undefined,
+): SubCategory | undefined => detail.subCategories?.find((s) => s.slug === subSlug)
 
 // Product detail (illustrative example) --------------------------------------
 
