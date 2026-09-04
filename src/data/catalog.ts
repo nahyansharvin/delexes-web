@@ -193,81 +193,165 @@ export const categoryDetails: Record<string, CategoryDetail> = {
     slug: 'general-consumables',
     title: 'General Consumables',
     description:
-      'A diverse portfolio of laboratory and medical consumables designed to support clinical diagnostics, research, and healthcare operations. The range includes wound care materials, histology consumables, liquid handling products, and sample preparation accessories, ensuring precision, safety, and efficiency across applications.',
+      'A broad range of everyday hospital and clinical consumables — spanning respiratory, hypodermic and catheter products, wound care and dressings, protective wear, containers and sterilization supplies — organised below by category.',
     cataloguePdf: null,
     // General Consumables is organised into sub-categories (see below) rather
     // than a flat product list, so there's nothing to show at this level.
     featured: [],
     otherItems: [],
+    // Real per-category product lists are pending — each renders the
+    // existing "coming soon" placeholder until featured/otherItems are filled in.
     subCategories: [
       {
-        slug: 'histology-consumables',
-        title: 'Histology Consumables',
+        slug: 'respiratory-series',
+        title: 'Respiratory Series',
         description:
-          'Microscope slides, cover glasses and embedding cassettes for tissue processing, sectioning and diagnostic sample analysis.',
+          'Oxygen masks, nebulizers, suction catheters and airway management consumables for respiratory care.',
         image: null,
         cataloguePdf: null,
         featured: [
-          { name: 'Microscope Slides', description: 'High-quality slides with ground edges and optional frosted or color-coated finishes. Designed for accurate sample analysis in laboratory and diagnostic applications.', image: null },
-          { name: 'Cover Glasses', description: 'Precision-manufactured cover glasses available in multiple thicknesses and sizes, ensuring clarity and protection for microscopic samples.', image: null },
-          { name: 'Embedding Cassettes', description: 'Durable histology cassettes with labeled surfaces and secure lids, available in multiple designs for routine, biopsy, and processing applications.', image: null },
+          { name: 'Simple Oxygen Mask', description: 'Clear medical-grade oxygen mask with adjustable nose clip, anti-crush tubing and elastic strap. Supplied with a 2.1m oxygen tube; latex-free and DEHP-free versions available. Sizes XS–XL, packed in a PE bag.', image: null },
+          { name: 'Nebulizer Mask', description: 'Clear medical-grade PVC nebulizer mask with adjustable nose clip, standard connector and 2.1m oxygen tube. Nebulizer jar available in 6cc or 15cc; latex-free and DEHP-free versions available. Sizes XS–XL, packed in a PE bag.', image: null },
+          { name: 'Nasal Oxygen Cannula', description: 'Medical-grade PVC nasal oxygen cannula available with soft, standard or flared tips, in green or transparent. Supplied with a 2.1m or 1.5m oxygen tube. Sizes XS–XL, packed in a PE bag.', image: null },
+          { name: 'Oxygen Mask With Reservoir Bag', description: 'Medical-grade PVC non-rebreathing oxygen mask with reservoir bag (with or without check valve) for high-concentration oxygen delivery. Features an adjustable nose clip, anti-crush tube and elastic strap, with a 2m/2.1m oxygen tube; DEHP-free available. Reservoir volumes of 500ml, 750ml or 1000ml, for adult and children sizes.', image: null },
+          { name: 'Silicone Manual Resuscitator', description: 'Natural-colour silicone manual resuscitator, autoclavable to 134°C to help prevent cross-infection. Latex-free, medical-grade silicone construction with a built-in 60cm H2O pressure relief valve and an all-in-one intake valve for direct connection to an oxygen reservoir bag; guaranteed for 5 years or 20 autoclave cycles. Optional airway, mouth opener and custom labelling; built-in 30mm exhale port for PEEP, inlet valve or manometer. Adult, pediatric and infant sizes, packed in a PP box, PE bag or paper box.', image: null },
         ],
         otherItems: [
-          'Tissue Cassette Storage Cabinets', 'Histology Cassette Variants (Routine, Biopsy, Processing)',
-          'Color-Frosted Microscope Slides', 'Silane-Coated Slides', 'Soda-Lime Glass Slides',
-          'Borosilicate Cover Glass',
+          'Adjustable Venturi Mask', 'Tracheostomy Mask', 'Aero Chamber With Mask', 'CPR Mask', 'CPAP Mask',
+          'Peak Flow Meter', 'Anesthesia Breathing Circuit', 'Nebulizer Mask Kit', 'O2+CO2 Nasal Cannula',
+          'SEBS Manual Resuscitator', 'PVC Manual Resuscitator', 'PVC Anesthesia Mask', 'Silicone Anesthesia Mask',
+          'Three Balls Spirometer', 'Humidifier Bottle',
         ],
       },
       {
-        slug: 'liquid-handling-products',
-        title: 'Liquid Handling Products',
+        slug: 'hypodermic-series',
+        title: 'Hypodermic Series',
         description:
-          'Serological pipettes, pipette pumps and supporting accessories for accurate, repeatable liquid handling in the lab.',
+          'Syringes, needles and infusion sets for injections, sampling and IV therapy.',
         image: null,
         cataloguePdf: null,
-        featured: [
-          { name: 'Serological Pipettes', description: 'Sterile, individually wrapped pipettes made from polystyrene, available in multiple volume capacities for accurate liquid handling.', image: null },
-          { name: 'Pipette Pumps', description: 'Ergonomic pipette controllers designed for precise aspiration and dispensing, resistant to acids and alkalis.', image: null },
-        ],
-        otherItems: [
-          'Pipette Stands', 'Sterile Liquid Handling Plastics', 'Different Volume Pipettes (1mL to 50mL)',
-        ],
+        featured: [],
+        otherItems: [],
       },
       {
-        slug: 'sample-preparation-accessories',
-        title: 'Sample Preparation Accessories',
+        slug: 'medical-catheters',
+        title: 'Medical Catheters',
         description:
-          'Homogenizer beads and accessories, grinding media and consumables for reliable sample disruption and preparation.',
+          'Urinary, IV and specialty catheters for a range of clinical procedures.',
         image: null,
         cataloguePdf: null,
-        featured: [
-          { name: 'Homogenizer Beads', description: 'High-performance beads made of glass, ceramic, and steel for efficient sample disruption in homogenization processes.', image: null },
-        ],
-        otherItems: [
-          'Disposable Laboratory Plastics', 'Sample Preparation Consumables', 'Homogenizer Accessories',
-          'Grinding Beads (Glass, Ceramic, Steel)',
-        ],
+        featured: [],
+        otherItems: [],
       },
       {
-        slug: 'wound-care-materials',
-        title: 'Wound Care Materials',
+        slug: 'urine-bag',
+        title: 'Urine Bag',
         description:
-          'Gauze swabs, dressings, cotton products and medical textiles for everyday wound care and clinical use.',
+          'Drainage and collection bags for urinary catheter care.',
         image: null,
         cataloguePdf: null,
-        featured: [
-          { name: 'Gauze Swabs', description: '100% cotton swabs with high absorbency, used for wound care and medical cleaning applications.', image: null },
-          { name: 'Non-Woven Swabs', description: 'Soft and highly absorbent swabs designed to wick fluids efficiently, suitable for wound management.', image: null },
-          { name: 'Paraffin Gauze', description: 'Medicated gauze used in the treatment of burns, ulcers, and skin injuries, maintaining a moist healing environment.', image: null },
-          { name: 'O.R. Towels', description: 'Lint-free disposable towels suitable for operating room environments, available in sterile and non-sterile formats.', image: null },
-          { name: 'Trach Sponges', description: 'Specialized sponges designed for tracheostomy care with high absorbency and patient comfort.', image: null },
-          { name: 'Absorbent Cotton Products', description: 'Medical-grade cotton materials designed for cleaning, dressing, and absorbing fluids in clinical settings.', image: null },
-        ],
-        otherItems: [
-          'Laboratory Textile Consumables', 'Sterile Gauze Variants', 'Non-Sterile Gauze Products',
-          'X-Ray Detectable Gauze', 'Sterilized Medical Textiles (Steam / Gamma)',
-          'Different Ply and Mesh Gauze Variants', 'Bulk Medical Consumables Packaging',
-        ],
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'cotton-series',
+        title: 'Cotton Series',
+        description:
+          'Absorbent cotton wool, rolls and balls for general clinical and wound care use.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'surgery-examination',
+        title: 'Surgery Examination',
+        description:
+          'Gloves, drapes and examination consumables for surgical and diagnostic procedures.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'wound-care',
+        title: 'Wound Care',
+        description:
+          'Gauze, bandages and dressings for everyday wound management.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'dressing-set',
+        title: 'Dressing Set',
+        description:
+          'Pre-assembled sterile dressing kits for wound care procedures.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'first-aid-products',
+        title: 'First Aid Products',
+        description:
+          'First aid kits and everyday emergency-care consumables.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'hospital-uniform',
+        title: 'Hospital Uniform',
+        description:
+          'Scrubs, gowns and protective clothing for clinical staff.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'plastic-container',
+        title: 'Plastic Container',
+        description:
+          'Specimen containers, sharps bins and general clinical storage containers.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'home-care',
+        title: 'Home Care',
+        description:
+          'Everyday consumables for home-based patient care.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'sterilization-packing',
+        title: 'Sterilization Packing',
+        description:
+          'Pouches, wrap and indicators for sterilizing and packing medical instruments.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
+      },
+      {
+        slug: 'others',
+        title: 'Others',
+        description:
+          'Additional general consumables not covered by the categories above.',
+        image: null,
+        cataloguePdf: null,
+        featured: [],
+        otherItems: [],
       },
     ],
   },
