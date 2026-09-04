@@ -92,8 +92,8 @@ export default function Category() {
         </section>
       )}
 
-      {/* sub-category hub, featured products, or "coming soon" */}
-      {isHub ? (
+      {/* sub-category hub */}
+      {isHub && (
         <section className="pt-9">
           <Container>
             <div className="mb-5 flex flex-wrap items-baseline justify-between gap-4">
@@ -121,7 +121,10 @@ export default function Category() {
             </div>
           </Container>
         </section>
-      ) : featured.length > 0 ? (
+      )}
+
+      {/* featured products */}
+      {!isHub && featured.length > 0 && (
         <section className="pt-9">
           <Container>
             <div className="mb-5 flex flex-wrap items-baseline justify-between gap-4">
@@ -149,7 +152,10 @@ export default function Category() {
             </div>
           </Container>
         </section>
-      ) : (
+      )}
+
+      {/* "coming soon" — only when there is nothing at all to list */}
+      {!isHub && featured.length === 0 && otherItems.length === 0 && (
         <section className="pt-9">
           <Container>
             <div className="rounded-xl border border-dashed border-line bg-white px-6 py-10 text-center">
@@ -175,12 +181,15 @@ export default function Category() {
       {!isHub && otherItems.length > 0 && (
         <section className="pt-10">
           <Container>
-            <div className="border-t border-line pt-9">
+            {/* When there are no featured products this list is the whole range,
+                so it drops the "Other" framing and the divider above it. */}
+            <div className={featured.length > 0 ? 'border-t border-line pt-9' : ''}>
               <h2 className="mb-1.5 font-heading text-[19px] font-bold text-heading">
-                Other Items
+                {featured.length > 0 ? 'Other Items' : 'Product Range'}
               </h2>
               <p className="mb-5 text-[13px] text-faint">
-                {otherItems.length} additional products available — contact us for details
+                {otherItems.length} {featured.length > 0 ? 'additional products' : 'products'}{' '}
+                available — contact us for details
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {otherItems.map((item) => (
