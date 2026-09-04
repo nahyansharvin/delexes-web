@@ -44,6 +44,21 @@ export interface ContactInfo {
   value: string
 }
 
+/** A single tile in a category's sub-category hub (e.g. General Consumables). */
+export interface SubCategory {
+  /** URL slug used in routing, e.g. "wound-care-materials". */
+  slug: string
+  title: string
+  /** Blurb shown on the sub-category tile and on its own listing page header. */
+  description: string
+  /** Tile image, or null when no image is available yet. */
+  image: string | null
+  /** Optional catalogue PDF path; when set, a download CTA is shown. */
+  cataloguePdf: string | null
+  featured: Product[]
+  otherItems: string[]
+}
+
 /** A full category detail record (featured + other items). */
 export interface CategoryDetail {
   slug: string
@@ -53,4 +68,10 @@ export interface CategoryDetail {
   cataloguePdf: string | null
   featured: Product[]
   otherItems: string[]
+  /**
+   * When present, this category is a hub of sub-categories (e.g. General
+   * Consumables): the listing page shows these tiles instead of `featured` /
+   * `otherItems`, and each tile links to its own listing page.
+   */
+  subCategories?: SubCategory[]
 }

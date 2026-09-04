@@ -2,13 +2,28 @@ import { Link, useParams } from 'react-router-dom'
 import Container from '../components/Container'
 import Button from '../components/Button'
 import ProductCard from '../components/ProductCard'
-import { getCategoryBySlug, getCategoryDetail } from '../data/catalog'
+import { getCategoryBySlug, getCategoryDetail, getSubCategoryBySlug } from '../data/catalog'
 
 export default function Category() {
-  const { slug } = useParams()
+  const { slug, subSlug } = useParams()
   const category = getCategoryBySlug(slug)
   const detail = getCategoryDetail(slug)
-  const { title, description, featured, otherItems, cataloguePdf } = detail
+  const subCategory = getSubCategoryBySlug(detail, subSlug)
+
+  // Categories with sub-categories (e.g. General Consumables) show a hub of
+  // sub-category tiles instead of products until one is picked; an unknown
+  // `subSlug` falls back to the hub rather than a dead end.
+  const subCategories = detail.subCategories ?? []
+  const isHub = subCategories.length > 0 && !subCategory
+
+  const title = subCategory ? subCategory.title : detail.title
+  const description = subCategory ? subCategory.description : detail.description
+  const featured = subCategory ? subCategory.featured : detail.featured
+  const otherItems = subCategory ? subCategory.otherItems : detail.otherItems
+  const cataloguePdf = subCategory ? subCategory.cataloguePdf : detail.cataloguePdf
+
+  const backTo = subCategory ? `/products/${category.slug}` : '/products'
+  const backLabel = subCategory ? `← ${category.title}` : '← All categories'
 
   return (
     <>
@@ -23,6 +38,14 @@ export default function Category() {
             <Link to="/products" className="text-muted">
               Products
             </Link>
+            {subCategory && (
+              <>
+                <span className="mx-1.5 text-[#cfcbc4]">/</span>
+                <Link to={`/products/${category.slug}`} className="text-muted">
+                  {category.title}
+                </Link>
+              </>
+            )}
             <span className="mx-1.5 text-[#cfcbc4]">/</span>
             <span className="font-semibold text-ink">{title}</span>
           </nav>
@@ -69,8 +92,39 @@ export default function Category() {
         </section>
       )}
 
+      {/* sub-category hub */}
+      {isHub && (
+        <section className="pt-9">
+          <Container>
+            <div className="mb-5 flex flex-wrap items-baseline justify-between gap-4">
+              <div>
+                <h2 className="mb-1 font-heading text-[19px] font-bold text-heading">
+                  Browse by Category
+                </h2>
+                <p className="text-[13px] text-faint">
+                  Select a category to view its full product range
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+              {subCategories.map((sc) => (
+                <ProductCard
+                  key={sc.slug}
+                  name={sc.title}
+                  description={sc.description}
+                  image={sc.image}
+                  to={`/products/${category.slug}/${sc.slug}`}
+                  badge="CATEGORY"
+                  tileLabel="category image"
+                />
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
       {/* featured products */}
-      {featured.length > 0 ? (
+      {!isHub && featured.length > 0 && (
         <section className="pt-9">
           <Container>
             <div className="mb-5 flex flex-wrap items-baseline justify-between gap-4">
@@ -98,7 +152,10 @@ export default function Category() {
             </div>
           </Container>
         </section>
-      ) : (
+      )}
+
+      {/* "coming soon" — only when there is nothing at all to list */}
+      {!isHub && featured.length === 0 && otherItems.length === 0 && (
         <section className="pt-9">
           <Container>
             <div className="rounded-xl border border-dashed border-line bg-white px-6 py-10 text-center">
@@ -121,15 +178,18 @@ export default function Category() {
       )}
 
       {/* other items */}
-      {otherItems.length > 0 && (
+      {!isHub && otherItems.length > 0 && (
         <section className="pt-10">
           <Container>
-            <div className="border-t border-line pt-9">
+            {/* When there are no featured products this list is the whole range,
+                so it drops the "Other" framing and the divider above it. */}
+            <div className={featured.length > 0 ? 'border-t border-line pt-9' : ''}>
               <h2 className="mb-1.5 font-heading text-[19px] font-bold text-heading">
-                Other Items
+                {featured.length > 0 ? 'Other Items' : 'Product Range'}
               </h2>
               <p className="mb-5 text-[13px] text-faint">
-                {otherItems.length} additional products available — contact us for details
+                {otherItems.length} {featured.length > 0 ? 'additional products' : 'products'}{' '}
+                available — contact us for details
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {otherItems.map((item) => (
@@ -164,8 +224,8 @@ export default function Category() {
               <Button to="/contact" variant="green" arrow className="px-5 py-3 text-sm">
                 Get in touch
               </Button>
-              <Button to="/products" variant="outline" className="px-5 py-3 text-sm">
-                &larr; All categories
+              <Button to={backTo} variant="outline" className="px-5 py-3 text-sm">
+                {backLabel}
               </Button>
             </div>
           </div>
